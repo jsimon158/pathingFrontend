@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import React from "react";
+import { MapContainer, TileLayer } from 'react-leaflet';
 import './App.css';
 
 
