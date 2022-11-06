@@ -8,7 +8,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "ng build --prod --base-href=https://jsimon158.github.io/pathingFrontend/"
+    "deploy": "ng build --configuration production --base-href=https://jsimon158.github.io/pathingFrontend/"
   },
   "private": true,
   "dependencies": {
