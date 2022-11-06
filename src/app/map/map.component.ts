@@ -42,7 +42,7 @@ export class MapComponent implements AfterViewInit {
   private initMap(): void {
     this.map = L.map('map', {
       center: [ 39.8282, -98.5795 ],
-      zoom: 3
+      zoom: 16
     });
 
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -65,8 +65,8 @@ export class MapComponent implements AfterViewInit {
 
     this.marker = L.marker([latitude, longitude])
     this.marker.addTo(this.map);
-
-    this.map.flyTo([latitude, longitude], 18)
+    this.map.flyTo([latitude, longitude])
+    
   } 
 
   constructor(private locationService : getLocation) {
