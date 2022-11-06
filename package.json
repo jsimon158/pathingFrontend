@@ -1,6 +1,7 @@
 {
   "name": "pathing-frontend",
   "version": "0.0.0",
+  "homepage": "https://jsimon158.github.io/pathingFrontend",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
