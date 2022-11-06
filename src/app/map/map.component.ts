@@ -1,13 +1,43 @@
 import { Component, AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
+import { getLocation } from '../get-location.service';
+
+const iconRetinaUrl = 'assets/marker-icon-2x.png';
+const iconUrl = 'assets/marker-icon.png';
+const shadowUrl = 'assets/marker-shadow.png';
+const iconDefault = L.icon({
+  iconRetinaUrl,
+  iconUrl,
+  shadowUrl,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  tooltipAnchor: [16, -28],
+  shadowSize: [41, 41]
+});
+L.Marker.prototype.options.icon = iconDefault;
+
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
+
 export class MapComponent implements AfterViewInit {
-  private map: L.Map | L.LayerGroup<any> | undefined;
+  private map: any;
+
+  public location!: GeolocationPosition;
+  public testAny: any
+
+
+  public lat: any;
+  public lng: any;
+
+  public oldLat: any;
+  public oldLng: any;
+
+  private marker: L.Marker | null;
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -24,9 +54,37 @@ export class MapComponent implements AfterViewInit {
     tiles.addTo(this.map);
   }
 
-  constructor() { }
+
+  public updateMap() {
+    let latitude = this.location.coords.latitude;
+    let longitude = this.location.coords.longitude;
+
+    if (this.marker !== null) {
+      this.map.removeLayer(this.marker)
+    }
+
+    this.marker = L.marker([latitude, longitude])
+    this.marker.addTo(this.map);
+
+    this.map.flyTo([latitude, longitude], 18)
+  } 
+
+  constructor(private locationService : getLocation) {
+    this.marker = null;
+   }
+
 
   ngAfterViewInit(): void {
     this.initMap();
-  }
+
+    // Call subscribe() to start listening for updates.
+    const locationsSubscription = this.locationService.locations.subscribe((position: GeolocationPosition) => {
+          console.log("changing map...")
+          this.location = position
+          this.updateMap()
+    });
+
 }
+
+}
+
